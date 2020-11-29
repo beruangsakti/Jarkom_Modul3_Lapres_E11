@@ -1,132 +1,142 @@
 # Jarkom_Modul3_Lapres_E11
 
 ## Soal 1
-(penjelasan soal)\
-(step1)\
+Pada soal 1, diminta untuk membuat topologi jaringan sesuai dengan gambar yang diberikan.\
+(nanti diisi step-step di terminal)\
+Lakukan ```bash topologi.sh``` , lalu lakukan login.\
+Pada router SURABAYA, ketikkan perintah ```nano /etc/sysctl.conf``` dan hilangkan tanda pagar(#) di depan ```net.ipv4.ip_forward=1``` supaya packet forwarding dapat dilakukan:\
 ![gambar1a](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/1A.PNG)\
-(step2)\
+Ketikkan ```sysctl -p``` supaya perubahan yang dilakukan akan diaplikasikan\
 ![gambar1b](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/1B.PNG)\
-(step3)\
+Dilakukan penyetinggan IP pada SURABAYA:\
 ![gambar1c](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/1C.PNG)\
-(step4)\
+Dilakukan penyetinggan IP pada TUBAN:\
 ![gambar1d](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/1D.PNG)\
-(step5)\
+Dilakukan penyetinggan IP pada MOJOKERTO:\
 ![gambar1e](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/1E.PNG)\
-(step6)\
+Dilakukan penyetinggan IP pada MALANG:\
 ![gambar1f](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/1F.PNG)\
-(step7)\
+Dilakukan penyetinggan IP pada GRESIK:\
 ![gambar1g](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/1G.PNG)\
-(step8)\
+Dilakukan penyetinggan IP pada SIDOARJO:\
 ![gambar1h](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/1H.PNG)\
-(step9)\
+Dilakukan penyetinggan IP pada BANYUWANGI:\
 ![gambar1i](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/1I.PNG)\
-(step10)\
+Dilakukan penyetinggan IP pada MADIUN:\
 ![gambar1j](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/1J.PNG)\
-(penutup)
 
-## Soal 2
-(penjelasan soal)\
-(step1)\
+## Soal 2-6
+Diminta agar SURABAYA dijadikan perantara ( DHCP Relay ) antara DHCP Server dan client\
+Lakukan ```apt-get update``` pada TUBAN, lalu install isc-dhcp-server dengan ```apt-get install isc-dhcp-server```.\
+Lakukan konfigurasi DHCP Server dengan ```nano /etc/default/isc-dhcp-server```, lalu ubah isi dari file dengan menambahkan ```INTERFACES="eth0"``` seperti pada gambar:\
 ![gambar1a](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/2A.PNG)\
-(step2)\
+Lakukan ```apt-get update``` pada SURABAYA, lalu install dhcp relay dengan ```apt-get install isc-dhcp-relay -y```, kemudian masukkan IP server DHCP (TUBAN):\
 ![gambar1a](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/2B.PNG)\
-(step3)\
+Isikan eth yang akan ditanggapi oleh DHCP, yaitu ```eth1 eth2 eth3``` sesuai pada soal:\
 ![gambar1a](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/2C.PNG)\
-(step4)\
+Kosongkan bagian berikutnya dan tekan tombol ok.\
+Pada SURABAYA, ```nano /etc/default/isc-dhcp-relay``` dapat digunakan untuk merubah konfigurasi:\
 ![gambar1a](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/2D.PNG)\
-(step5)\
+Pada TUBAN, buka file konfigurasi DHCP dengan ```nano /etc/dhcp/dhcpd.conf``` lalu tambahkan sesuai permohonan soal\
+```
+subnet 'NID' netmask 'Netmask' {
+    range 'IP_Awal' 'IP_Akhir';
+    option routers 'iP_Gateway';
+    option domain-name-servers 'DNS_yang_diinginkan';
+    default-lease-time 'Waktu(dalam detik)';
+    max-lease-time 'Waktu(dalam detik)';
+}
+```
+yang mana berarti untuk client pada subnet 1:\
 ![gambar1a](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/2E.PNG)\
-(step6)\
+Untuk client pada subnet 3:\
 ![gambar1a](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/2F.PNG)\
-(step7)\
-
-## Soal 3
-(penjelasan soal)\
-(step1)\
+Lakukan restart DHCP server pada TUBAN ```service isc-dhcp-server restart```\
 ![gambar1a](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/3A.PNG)\
-(step2)\
+Pada client GRESIK dan SIDOARJO, lakukan restart network dengan ```service networking restart```, lalu digunakan ```ip a``` untuk memeriksa hasil konfigurasi\
 ![gambar1a](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/3B.PNG)\
-(step3)\
-
-## Soal 4
-(penjelasan soal)\
-(step1)\
+Berikutnya akan dilakukan pengecekan terhadap BANYUWANGI dan MADIUN\
 ![gambar1a](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/4A.PNG)\
-(step2)\
+Pada client BANYUWANGI dan MADIUN, lakukan restart network dengan ```service networking restart```, lalu digunakan ```ip a``` untuk memeriksa hasil konfigurasi\
 ![gambar1a](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/4B.PNG)\
-(step3)\
-
-## Soal 5
-(penjelasan soal)\
-(step1)\
-![gambar1a](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/5A.PNG)\
-(step2)\
+Pengecekan juga dapat dilakukan dengan ```cat /etc/resolv.conf``` pada masing-masing client:\
 ![gambar1a](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/5B.PNG)\
-(step3)\
 ![gambar1a](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/5C.PNG)\
-(step3)\
-
-## Soal 6
-(penjelasan soal)\
-(step1)\
-![gambar1a](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/6A.PNG)\
-(step2)\
 
 ## Soal 7
-(penjelasan soal)\
-(step1)\
+Diminta membuat autentikasi user saat hendak mengakses proxy\
+Pada MOJOKERTO, lakukan ```apt-get update```, lalu ```apt-get install apache2-utils```.
+Buat user baru dengan ```htpasswd -c /etc/squid/passwd userta_e11```, lalu set passwordnya menjadi ```inipassw0rdta_e11```.\
+Edit konfigurasi pada squid dengan ```nano /etc/squid/squid.conf``` seperti pada gambar:\
 ![gambar1a](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/7A.PNG)\
-(step2)\
+Setelah itu, gunakan browser dan ubah settingan proxy browser. Ketika mencoba untuk mengakses internet, akan muncul halaman autentikasi dimana diperlukan user dan password yang sebelumnya telah diset untuk mengakses internet:\
 ![gambar1a](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/7B.PNG)\
-(step3)\
 
 ## Soal 8
-(penjelasan soal)\
-(step1)\
+Diminta agar akses internet dengan proxy hanya dapat dilakukan pada setiap hari Selasa-Rabu pukul 13.00-18.00. \
+Buat file baru yang akan menampung pengaturan tersebut pada MOJOKERTO dengan ```nano /etc/squid/acl.conf```, lalu isikan:
+```
+acl AVAILABLE_WORKING time TW 13:00-18:00
+```
 ![gambar1a](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/8A.PNG)\
-(step2)\
+Tambahkan pengaturan pada squid.conf dengan membuka ```nano /etc/squid/squid.conf```, lalu tambahkan
+```
+include /etc/squid/acl/conf
+http_access allow USERS TA
+http_access deny all
+``` 
 ![gambar1a](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/8B.PNG)\
-(step3)\
+Internet akan dapat diakses pada jam yang telah ditentukan\
 ![gambar1a](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/8C.PNG)\
-(step3)\
 
 ## Soal 9
 (penjelasan soal)\
-(step1)\
+Buka kembali konfigurasi waktu akses dengan ```nano /etc/squid/acl.conf``` lalu tambahkan\
 ![gambar1a](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/9A.PNG)\
-(step2)\
+Buka ```nano /etc/squid/squid.conf``` lalu tambahkan 
+```
+http_access allow USERS BIMBINGAN01
+http_access allow USERS BIMBINGAN02
+```
 ![gambar1a](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/9B.PNG)\
-(step3)\
 
 ## Soal 10
-(penjelasan soal)\
-(step1)\
+Diminta agar ketika hendak mengakses google.com, justru akan di redirect menuju monta.if.its.ac.id\
+Buka ```nano /etc/squid/squid.conf``` lalu tambahkan 
+```
+acl BLKSite dstdomain google.com
+deny_info http://monta.if.its.ac.id all
+http_reply_access deny BLKSite all
+```
 ![gambar1a](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/10A.PNG)\
-(step2)\
+Simpan, lalu restart squid dengan ```service squid restart``` dan dicoba untuk mengakses google.com\
 ![gambar1a](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/10B.PNG)\
-(step3)\
 ![gambar1a](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/10C.PNG)\
-(step3)\
 
 ## Soal 11
-(penjelasan soal)\
-(step1)\
+Diminta untuk membuat error page yang khusus\
+Gunakan ```cd /usr/share/squid/errors/templates``` untuk mengakses direktori, lalu unduh file error page dengan ```wget 10.151.36.202/ERR_ACCESS_DENIED```\
 ![gambar1a](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/11a.PNG)\
-(step2)\
+Buka ```nano /etc/squid/squid.conf``` lalu ubah \
 ![gambar1a](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/11B.PNG)\
-(step3)\
 
 ## Soal 12
 (penjelasan soal)\
-(step1)\
+Pada MALANG, lakukan ```apt-get update``` dan install bind dengan ```apt-get install bind9 -y```\
+Gunakan ```nano /etc/bind/named.conf.local```, lalu isikan 
+```
+zone "e11.pw" {
+ 	type master;
+	file "/etc/bind/jarkom/e11.pw";
+};
+```
 ![gambar1a](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/12A.PNG)\
-(step2)\
+Masukkan konfigurasi pada file e11.pw dengan ```nano /etc/bind/jarkom/e11.pw```\
 ![gambar1a](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/12B.PNG)\
-(step3)\
+Simpan, lalu restart bind dengan ```service bind9 restart```, lalu ubah pengaturan proxy\
 ![gambar1a](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/12C.PNG)\
-(step3)\
+Lakukan ping untuk mengetes apakah berhasil atau belum\
 ![gambar1a](https://github.com/beruangsakti/Jarkom_Modul3_Lapres_E11/blob/main/Screenshoot/12D.PNG)\
-(step3)\
 
 # Kesulitan Pengerjaan
 (isi)
